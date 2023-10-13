@@ -10,7 +10,9 @@ public class ModelLoader {
         ArrayList<float[]> Vertics = new ArrayList<>();
         ArrayList<float[]> VerticsN = new ArrayList<>();
         ArrayList<float[]> VerticsT = new ArrayList<>();
-        ArrayList<List<Integer>> Faces = new ArrayList<>();
+        List<Integer> Vindex = new ArrayList<>();
+        List<Integer> Tindex = new ArrayList<>();
+        List<Integer> Nindex = new ArrayList<>();
         String FilePath = "african_head.obj";
         try {
             FileReader f = new FileReader(FilePath);
@@ -45,35 +47,22 @@ public class ModelLoader {
                     VerticsT.add(Vs);
                 }
                 String[] parts;
-                List<Integer> TotalFaces = new ArrayList<>();
+               
                 if (P[0].equals("f")) {
                     if (P[1].contains("/")) {
-                        System.out.println("Case I"); // "f 1/1/1 2/2/2 3/3/3"
                         for (int i = 1; i < P.length; i++) {
                             parts = P[i].split("/"); // '1 1 1'
-                            for (int j = 0; j < parts.length; j++) {
-                                int idx = Integer.parseInt(parts[j]);
-                                TotalFaces.add(idx);
-                            }
+                            Vindex.add(Integer.parseInt(parts[0]));
+                            Tindex.add(Integer.parseInt(parts[1]));
+                            Nindex.add(Integer.parseInt(parts[2]));
                         }
-                        Faces.add(TotalFaces);
-                        System.out.println(Faces);
-                    } else {
-                        System.out.println("Case II");
-                        int x = Integer.parseInt(P[1]);
-                        int y = Integer.parseInt(P[2]);
-                        int z = Integer.parseInt(P[3]);
-                        List<Integer> face = new ArrayList<>();
-                        face.add(x);
-                        face.add(y);
-                        face.add(z);
-                        Faces.add(face);
-                    }
-                    System.out.println(Faces);
 
+                    }  
                 }
 
             }
+            System.out.println(Vindex.size());
+            
             reader.close();
         } catch (Exception e) {
             System.out.println(e);
